@@ -31,6 +31,7 @@ src\com\cleverua\bb\ui\MosaicItemField.java
 src\com\cleverua\bb\ui\MosaicManager.java
 src\com\cleverua\bb\ui\MosaicScreen.java
 src\com\cleverua\bb\ui\NewMosaicManager.java
+src\com\cleverua\bb\ui\PreviewPopupScreen.java
 src\com\cleverua\bb\utils\FieldsUtils.java
 src\com\cleverua\bb\utils\FontUtils.java
 src\com\cleverua\bb\utils\IOUtils.java

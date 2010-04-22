@@ -11,7 +11,7 @@ public class SampleApplication extends UiApplication {
     public static void main(String[] args) {
         application = new SampleApplication();
         
-        int modelsSize = 100;
+        int modelsSize = 2;
         Model[] models = new Model[modelsSize];
         for (int i = 0; i < modelsSize; i++) {
             models[i] = new Model("file:///SDCard/big_img.jpg", "Item " + i);

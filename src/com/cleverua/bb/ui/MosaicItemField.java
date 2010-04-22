@@ -1,5 +1,7 @@
 package com.cleverua.bb.ui;
 
+import com.cleverua.bb.utils.Logger;
+
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
 import net.rim.device.api.ui.DrawStyle;
@@ -36,13 +38,22 @@ public class MosaicItemField extends Field {
     private int errorLoadingWidth;
     private int errorLoadingHeight;
     
-    public MosaicItemField(IMosaicModel mosaicModel) {
-        super(Field.FOCUSABLE);
+    public MosaicItemField(IMosaicModel mosaicModel, boolean isFocusable) {
+        super(isFocusable ? Field.FOCUSABLE : Field.NON_FOCUSABLE);
         imgUrl = mosaicModel.getImgUrl();
         label  = mosaicModel.getLabel();
     }
     
-    public void setDimention(XYDimension fieldDimension) {
+    void setDimention(XYDimension fieldDimension) {
+        /*Logger.debug(this, "setDimention: entered for '" + label + 
+                "', width = " + fieldDimension.width + ", height = " + fieldDimension.height);*/
+        
+        if (w != fieldDimension.width || h != fieldDimension.height) {
+            // dimensions changed - probably screen was rotated, so need to reload Bitmap
+            bmp = null;
+            isLoadingImage = false;
+        }
+        
         w = fieldDimension.width;
         h = fieldDimension.height;
     }
@@ -56,18 +67,16 @@ public class MosaicItemField extends Field {
     }
     
     protected void layout(int width, int height) {
-        //Logger.debug(this, "layout: entered for '" + label + "', width = " + width + ", height = " + height);
+        Logger.debug(this, "layout: entered for '" + label + "', width = " + width + ", height = " + height);
         
-        /*w = width;
-        h = height;*/
-        
-        setExtent(/*width, height*/w, h);
+        // ignore params, just use our custom w and h, that were previously set at setDimention()
+        setExtent(w, h);
         
         //Logger.debug(this, "layout: passed");
     }
 
     protected void paint(Graphics gfx) {
-        //Logger.debug(this, "paint: entered for '" + label + '\'');
+        Logger.debug(this, "paint: entered for '" + label + '\'');
         
         if (label != null) {
             drawLabel(gfx);
