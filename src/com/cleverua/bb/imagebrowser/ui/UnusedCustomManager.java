@@ -1,16 +1,19 @@
-package com.cleverua.bb.ui;
+package com.cleverua.bb.imagebrowser.ui;
 
 import net.rim.device.api.system.Display;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Manager;
 
-public class MosaicManager extends Manager {
+/**
+ * This class is currently unused, but kept for possible future usage.
+ */
+public class UnusedCustomManager extends Manager {
 
     private int columns; 
     private int rows;
     private int yOffset;
     
-    public MosaicManager(int columns, int rows, int yOffset) {
+    public UnusedCustomManager(int columns, int rows, int yOffset) {
         super(0);
         this.columns = (columns == 0) ? 1 : columns; 
         this.rows    = (rows == 0)    ? 1 : rows;

@@ -1,28 +1,31 @@
-package com.cleverua.bb.ui;
+package com.cleverua.bb.imagebrowser.ui;
 
 import java.util.Vector;
 
+import net.rim.device.api.i18n.ResourceBundleFamily;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.FieldChangeListener;
 import net.rim.device.api.ui.component.LabelField;
 import net.rim.device.api.ui.component.Menu;
 import net.rim.device.api.ui.container.MainScreen;
 
-import com.cleverua.bb.example.Model;
+import com.cleverua.bb.imagebrowser.IImageBrowserItemModel;
 import com.cleverua.bb.utils.FieldsUtils;
 
-public class MosaicScreen extends MainScreen {
+public class ImageBrowserScreen extends MainScreen {
 
     private static final String SCREEN_TITLE = "Image Browser Sample";
     
     private LabelField screenTitleFeild;
-    private Model[] models;
+    private IImageBrowserItemModel[] models;
     private int columns;
     private int rows;
     
-    private PreviewPopupScreen previewScreen = new PreviewPopupScreen();
+    private ImageBrowserItemFieldsManager mosaicManager;
+    
+    private ImageBrowserPreviewScreen previewScreen = new ImageBrowserPreviewScreen();
 
-    public MosaicScreen(Model[] modelsArray, int columns, int rows) {
+    public ImageBrowserScreen(IImageBrowserItemModel[] modelsArray, int columns, int rows) {
         super();
         
         models  = modelsArray;
@@ -33,10 +36,10 @@ public class MosaicScreen extends MainScreen {
         initUI();
     }
     
-    public MosaicScreen(Vector modelsVector, int columns, int rows) {
+    public ImageBrowserScreen(Vector modelsVector, int columns, int rows) {
         super();
         
-        models = new Model[modelsVector.size()];
+        models = new IImageBrowserItemModel[modelsVector.size()];
         modelsVector.copyInto(models);
         
         this.columns = columns;
@@ -56,6 +59,27 @@ public class MosaicScreen extends MainScreen {
         return true;
     }
     
+    /**
+     * Does nothing
+     */
+    public void setTitle(ResourceBundleFamily arg0, int arg1) {
+        /* do nothing */
+    }
+    
+    /**
+     * Does nothing
+     */
+    public void setTitle(String str) {
+        /* do nothing */
+    }
+    
+    /**
+     * Does nothing
+     */
+    public void setTitle(Field f) {
+        /* do nothing */
+    }
+    
     private void initUI() {
         screenTitleFeild = FieldsUtils.getScreenTitleFeild(SCREEN_TITLE);
         add(screenTitleFeild);
@@ -64,16 +88,15 @@ public class MosaicScreen extends MainScreen {
     
     private void addMosaicItemFields() {
         int offset = screenTitleFeild.getPreferredHeight();
-        NewMosaicManager mosaicManager = new NewMosaicManager(columns, rows, offset);
+        mosaicManager = new ImageBrowserItemFieldsManager(columns, rows, offset);
         
         final int modelsSize = models.length;
         
         for (int i = 0; i < modelsSize; i++) {
-            final Model model = models[i];
-            MosaicItemField field = new MosaicItemField(model, true);
+            final IImageBrowserItemModel model = models[i];
+            ImageBrowserItemField field = new ImageBrowserItemField(model, true);
             field.setChangeListener(new FieldChangeListener() {
                 public void fieldChanged(Field f, int c) {
-                    //Dialog.inform("Not implemented yet!!!");
                     previewScreen.show(model);
                 }
             });
@@ -82,5 +105,4 @@ public class MosaicScreen extends MainScreen {
         
         add(mosaicManager);
     }
-
 }

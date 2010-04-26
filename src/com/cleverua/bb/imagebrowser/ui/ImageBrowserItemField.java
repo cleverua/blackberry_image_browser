@@ -1,6 +1,4 @@
-package com.cleverua.bb.ui;
-
-import com.cleverua.bb.utils.Logger;
+package com.cleverua.bb.imagebrowser.ui;
 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
@@ -8,9 +6,12 @@ import net.rim.device.api.ui.DrawStyle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
 import net.rim.device.api.ui.UiApplication;
-import net.rim.device.api.ui.XYDimension;
 
-public class MosaicItemField extends Field {
+import com.cleverua.bb.imagebrowser.BitmapLoader;
+import com.cleverua.bb.imagebrowser.IBitmapLoading;
+import com.cleverua.bb.imagebrowser.IImageBrowserItemModel;
+
+public class ImageBrowserItemField extends Field {
 
     private static final String READING_LABEL = "Reading...";
     private static final String ERROR_LABEL   = "Error";
@@ -38,24 +39,21 @@ public class MosaicItemField extends Field {
     private int errorLoadingWidth;
     private int errorLoadingHeight;
     
-    public MosaicItemField(IMosaicModel mosaicModel, boolean isFocusable) {
+    public ImageBrowserItemField(IImageBrowserItemModel model, boolean isFocusable) {
         super(isFocusable ? Field.FOCUSABLE : Field.NON_FOCUSABLE);
-        imgUrl = mosaicModel.getImgUrl();
-        label  = mosaicModel.getLabel();
+        imgUrl = model.getImgUrl();
+        label  = model.getLabel();
     }
     
-    void setDimention(XYDimension fieldDimension) {
-        /*Logger.debug(this, "setDimention: entered for '" + label + 
-                "', width = " + fieldDimension.width + ", height = " + fieldDimension.height);*/
-        
-        if (w != fieldDimension.width || h != fieldDimension.height) {
+    void setDimention(int width, int height) {
+        if (w != width || h != height) {
             // dimensions changed - probably screen was rotated, so need to reload Bitmap
             bmp = null;
             isLoadingImage = false;
         }
         
-        w = fieldDimension.width;
-        h = fieldDimension.height;
+        w = width;
+        h = height;
     }
     
     public int getPreferredHeight() {
@@ -67,16 +65,15 @@ public class MosaicItemField extends Field {
     }
     
     protected void layout(int width, int height) {
-        Logger.debug(this, "layout: entered for '" + label + "', width = " + width + ", height = " + height);
+        // Logger.debug(this, "layout: entered for '" + label + "', width = " + 
+        // width + ", height = " + height);
         
         // ignore params, just use our custom w and h, that were previously set at setDimention()
         setExtent(w, h);
-        
-        //Logger.debug(this, "layout: passed");
     }
 
     protected void paint(Graphics gfx) {
-        Logger.debug(this, "paint: entered for '" + label + '\'');
+        // Logger.debug(this, "paint: entered for '" + label + '\'');
         
         if (label != null) {
             drawLabel(gfx);
@@ -110,7 +107,6 @@ public class MosaicItemField extends Field {
         }
         
         //Logger.debug(this, "paint: passed");
-        
     }
     
     protected boolean navigationClick(int status, int time) {
@@ -205,5 +201,4 @@ public class MosaicItemField extends Field {
             });
         }
     };
-    
 }

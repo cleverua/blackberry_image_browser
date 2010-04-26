@@ -1,4 +1,4 @@
-package com.cleverua.bb.ui;
+package com.cleverua.bb.imagebrowser;
 
 import net.rim.device.api.system.Bitmap;
 

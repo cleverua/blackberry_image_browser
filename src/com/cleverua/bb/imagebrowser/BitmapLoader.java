@@ -1,8 +1,7 @@
-package com.cleverua.bb.ui;
+package com.cleverua.bb.imagebrowser;
 
 import net.rim.device.api.ui.UiApplication;
 
-import com.cleverua.bb.ui.IBitmapLoading;
 import com.cleverua.bb.utils.IOUtils;
 import com.cleverua.bb.utils.Logger;
 import com.cleverua.bb.utils.WorkQueue;

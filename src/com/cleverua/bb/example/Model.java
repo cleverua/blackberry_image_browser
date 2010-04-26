@@ -1,8 +1,8 @@
 package com.cleverua.bb.example;
 
-import com.cleverua.bb.ui.IMosaicModel;
+import com.cleverua.bb.imagebrowser.IImageBrowserItemModel;
 
-public class Model implements IMosaicModel {
+public class Model implements IImageBrowserItemModel {
 
     private String imgUrl;
     private String label;
