@@ -5,7 +5,7 @@ import net.rim.device.api.ui.container.FlowFieldManager;
 
 public class ImageBrowserItemFieldsManager extends FlowFieldManager {
 
-    private int columns; 
+    private int columns;
     private int rows;
     private int yOffset;
     

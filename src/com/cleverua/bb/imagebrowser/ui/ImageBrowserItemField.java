@@ -2,6 +2,7 @@ package com.cleverua.bb.imagebrowser.ui;
 
 import net.rim.device.api.system.Bitmap;
 import net.rim.device.api.system.Characters;
+import net.rim.device.api.ui.Color;
 import net.rim.device.api.ui.DrawStyle;
 import net.rim.device.api.ui.Field;
 import net.rim.device.api.ui.Graphics;
@@ -16,8 +17,12 @@ public class ImageBrowserItemField extends Field {
     private static final String READING_LABEL = "Reading...";
     private static final String ERROR_LABEL   = "Error";
     
-    private static final int PADDING       = 5;
-    private static final int TOTAL_PADDING = PADDING * 2;
+    private static final int PADDING_LEFT   = 5;
+    private static final int PADDING_RIGHT  = 6;
+    private static final int PADDING_TOP    = 5;
+    private static final int PADDING_BOTTOM = 6;
+    private static final int TOTAL_PADDING_X = PADDING_RIGHT + PADDING_LEFT;
+    private static final int TOTAL_PADDING_Y = PADDING_TOP + PADDING_BOTTOM;
     
     private int w; // Field's width
     private int h; // Field's height
@@ -39,10 +44,17 @@ public class ImageBrowserItemField extends Field {
     private int errorLoadingWidth;
     private int errorLoadingHeight;
     
-    public ImageBrowserItemField(IImageBrowserItemModel model, boolean isFocusable) {
+    private boolean drawBorder;
+    
+    public ImageBrowserItemField(IImageBrowserItemModel model, boolean isFocusable, boolean drawBorder) {
         super(isFocusable ? Field.FOCUSABLE : Field.NON_FOCUSABLE);
         imgUrl = model.getImgUrl();
         label  = model.getLabel();
+        this.drawBorder = drawBorder;
+    }
+    
+    public ImageBrowserItemField(IImageBrowserItemModel model) {
+        this(model, true, true);
     }
     
     void setDimention(int width, int height) {
@@ -74,6 +86,15 @@ public class ImageBrowserItemField extends Field {
 
     protected void paint(Graphics gfx) {
         // Logger.debug(this, "paint: entered for '" + label + '\'');
+
+        // draw border
+        if (drawBorder) {
+            final int initialColor = gfx.getColor();
+            gfx.setColor(Color.GRAY);
+            gfx.drawLine(w-1, 0, w-1, h-1);
+            gfx.drawLine(0, h-1, w-1, h-1);
+            gfx.setColor(initialColor);
+        }
         
         if (label != null) {
             drawLabel(gfx);
@@ -91,8 +112,8 @@ public class ImageBrowserItemField extends Field {
             }
             
             if (!isLoadingImage) {
-                desiredImgHeight = h - labelHeight - TOTAL_PADDING;
-                desiredImgWidth  = w - TOTAL_PADDING;
+                desiredImgHeight = h - labelHeight - TOTAL_PADDING_Y;
+                desiredImgWidth  = w - TOTAL_PADDING_X;
                 isLoadingImage = true;
                 
                 BitmapLoader.requestLoading(bitmapLoading);
@@ -106,7 +127,7 @@ public class ImageBrowserItemField extends Field {
             drawBitmap(gfx);
         }
         
-        //Logger.debug(this, "paint: passed");
+        // Logger.debug(this, "paint: passed");
     }
     
     protected boolean navigationClick(int status, int time) {
@@ -124,11 +145,11 @@ public class ImageBrowserItemField extends Field {
     
     private void drawError(Graphics gfx) {
         errorLoadingHeight = gfx.getFont().getHeight();
-        errorLoadingWidth  = w - TOTAL_PADDING;
+        errorLoadingWidth  = w - TOTAL_PADDING_X;
         
         gfx.drawText(
             ERROR_LABEL, 
-            PADDING, ((h - labelHeight - errorLoadingHeight - PADDING) >> 1), 
+            PADDING_LEFT, ((h - labelHeight - errorLoadingHeight - PADDING_BOTTOM) >> 1), 
             (DrawStyle.ELLIPSIS | DrawStyle.HCENTER), 
             errorLoadingWidth
         );
@@ -136,11 +157,11 @@ public class ImageBrowserItemField extends Field {
     
     private void drawLoading(Graphics gfx) {
         readingHeight = gfx.getFont().getHeight();
-        readingWidth  = w - TOTAL_PADDING;
+        readingWidth  = w - TOTAL_PADDING_X;
         
         gfx.drawText(
             READING_LABEL, 
-            PADDING, ((h - labelHeight - readingHeight - PADDING) >> 1), 
+            PADDING_LEFT, ((h - labelHeight - readingHeight - PADDING_BOTTOM) >> 1), 
             (DrawStyle.ELLIPSIS | DrawStyle.HCENTER), 
             readingWidth
         );
@@ -148,23 +169,29 @@ public class ImageBrowserItemField extends Field {
     
     private void drawLabel(Graphics gfx) {
         labelHeight = gfx.getFont().getHeight();
-        labelWidth  = w - TOTAL_PADDING;
+        labelWidth  = w - TOTAL_PADDING_X;
         
         gfx.drawText(
             label, 
-            PADDING, (h - labelHeight - PADDING), 
+            PADDING_LEFT, (h - labelHeight - PADDING_BOTTOM), 
             (DrawStyle.ELLIPSIS | DrawStyle.HCENTER), 
             labelWidth
         );
     }
     
     private void drawBitmap(Graphics gfx) {
-        gfx.drawBitmap(
-            PADDING + ((desiredImgWidth  - bmp.getWidth())  >> 1), 
-            PADDING + ((desiredImgHeight - bmp.getHeight()) >> 1), 
-            bmp.getWidth(), bmp.getHeight(), 
-            bmp, 0, 0
-        );
+        final int width  = bmp.getWidth();
+        final int height = bmp.getHeight();
+        
+        final int x = PADDING_LEFT + ((desiredImgWidth  - width)  >> 1);
+        final int y = PADDING_TOP  + ((desiredImgHeight - height) >> 1);
+        
+        gfx.drawBitmap(x, y, width, height, bmp, 0, 0);
+        
+        final int initialColor = gfx.getColor();
+        gfx.setColor(Color.GRAY);
+        gfx.drawRect(x, y, width, height);
+        gfx.setColor(initialColor);
     }
     
     private IBitmapLoading bitmapLoading = new IBitmapLoading() {

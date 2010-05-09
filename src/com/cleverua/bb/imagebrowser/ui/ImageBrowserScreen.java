@@ -94,7 +94,7 @@ public class ImageBrowserScreen extends MainScreen {
         
         for (int i = 0; i < modelsSize; i++) {
             final IImageBrowserItemModel model = models[i];
-            ImageBrowserItemField field = new ImageBrowserItemField(model, true);
+            ImageBrowserItemField field = new ImageBrowserItemField(model);
             field.setChangeListener(new FieldChangeListener() {
                 public void fieldChanged(Field f, int c) {
                     previewScreen.show(model);

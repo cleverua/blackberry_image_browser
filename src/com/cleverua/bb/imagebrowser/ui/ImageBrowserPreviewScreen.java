@@ -12,7 +12,7 @@ public class ImageBrowserPreviewScreen extends PopupScreen {
     }
 
     public void show(IImageBrowserItemModel model) {
-        add(new ImageBrowserItemField(model, false));
+        add(new ImageBrowserItemField(model, false, false));
         UiApplication.getUiApplication().pushScreen(this);
     }
     
