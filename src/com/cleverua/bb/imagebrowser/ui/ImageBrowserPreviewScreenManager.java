@@ -1,8 +1,8 @@
 package com.cleverua.bb.imagebrowser.ui;
 
-public class ImageBrowserPreviewScreenManager extends ImageBrowserItemFieldsManager {
+public class ImageBrowserPreviewScreenManager extends BaseImageBrowserItemFieldsManager {
 
-    public ImageBrowserPreviewScreenManager() {
+    /* package */ ImageBrowserPreviewScreenManager() {
         super(1, 1, 0);
     }
 

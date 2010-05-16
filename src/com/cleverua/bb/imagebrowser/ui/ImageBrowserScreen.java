@@ -12,6 +12,10 @@ import net.rim.device.api.ui.container.MainScreen;
 import com.cleverua.bb.imagebrowser.IImageBrowserItemModel;
 import com.cleverua.bb.utils.FieldsUtils;
 
+/**
+ * This is an entrance point to use the Image Browser component.
+ * @author Vitaliy Khudenko, vit@cleverua.com
+ */
 public class ImageBrowserScreen extends MainScreen {
 
     private static final String SCREEN_TITLE = "Image Browser Sample";
@@ -69,7 +73,7 @@ public class ImageBrowserScreen extends MainScreen {
     /**
      * Does nothing
      */
-    public void setTitle(String str) {
+    public void setTitle(String title) {
         /* do nothing */
     }
     

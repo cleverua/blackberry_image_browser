@@ -7,12 +7,12 @@ import com.cleverua.bb.imagebrowser.IImageBrowserItemModel;
 
 public class ImageBrowserPreviewScreen extends PopupScreen {
 
-    public ImageBrowserPreviewScreen() {
+    /* package */ ImageBrowserPreviewScreen() {
         super(new ImageBrowserPreviewScreenManager(), DEFAULT_CLOSE);
     }
 
-    public void show(IImageBrowserItemModel model) {
-        add(new ImageBrowserItemField(model, false, false));
+    /* package */ void show(IImageBrowserItemModel model) {
+        add(new ImageBrowserPreviewItemField(model));
         UiApplication.getUiApplication().pushScreen(this);
     }
     

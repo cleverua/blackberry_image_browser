@@ -17,7 +17,7 @@ public class BitmapLoader {
                     public void run() {
                         try {
                             loading.setBitmap(
-                                IOUtils.resizeImage(
+                                IOUtils.getResizedImage(
                                     loading.getImgUrl(), 
                                     loading.getDesiredImgWidth(), 
                                     loading.getDesiredImgHeight()

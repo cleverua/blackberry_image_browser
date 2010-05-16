@@ -11,7 +11,6 @@ import javax.microedition.io.file.FileConnection;
 
 import net.rim.device.api.io.FileNotFoundException;
 import net.rim.device.api.io.file.FileIOException;
-import net.rim.device.api.math.Fixed32;
 import net.rim.device.api.system.Characters;
 import net.rim.device.api.system.EncodedImage;
 
@@ -1003,7 +1002,8 @@ public class IOUtils {
         }
     }
     
-    public static EncodedImage resizeImage(String imgUrl, int toWidth, int toHeight) throws IOException {
+    public static EncodedImage getResizedImage(String imgUrl, int toWidth, int toHeight) 
+            throws IOException {
 
         InputStream in = null;
         FileConnection fc = null;
@@ -1031,16 +1031,8 @@ public class IOUtils {
             // Logger.debug("resizeImage: going to create EncodedImage..");
             EncodedImage eImage = EncodedImage.createEncodedImage(data, 0, data.length);
 
-            // Logger.debug("resizeImage: going to calc scaleX..");
-            int scaleX = Fixed32.div(Fixed32.toFP(eImage.getWidth()), Fixed32.toFP(toWidth));
-
-            // Logger.debug("resizeImage: going to calc scaleY..");
-            int scaleY = Fixed32.div(Fixed32.toFP(eImage.getHeight()), Fixed32.toFP(toHeight));
-
-            int scale = (scaleX > scaleY) ? scaleX : scaleY;
-
             // Logger.debug("resizeImage: going to scale and return..");
-            return eImage.scaleImage32(scale, scale);
+            return ImageUtils.resize(eImage, toWidth, toHeight, true);
 
         } finally {
             safelyCloseStream(in);

@@ -13,7 +13,7 @@ public class UnusedCustomManager extends Manager {
     private int rows;
     private int yOffset;
     
-    public UnusedCustomManager(int columns, int rows, int yOffset) {
+    /* package */ UnusedCustomManager(int columns, int rows, int yOffset) {
         super(0);
         this.columns = (columns == 0) ? 1 : columns; 
         this.rows    = (rows == 0)    ? 1 : rows;
