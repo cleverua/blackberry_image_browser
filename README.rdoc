@@ -1,7 +1,15 @@
 == DESCRIPTION
 
-TODO
+This is a custom ImageBrowser component for Java BlackBerry development.
+
+=== Usage
+
+ImageBrowser component has ImageBrowserScreen as an entrance point.
+ImageBrowserScreen constructor accepts IImageBrowserItemModel collection and number of columns/rows to display.
+IImageBrowserItemModel is a simple interface with just 2 methods - String getImgUrl() and String getLabel().
+ 
 
 == EXAMPLES
 
-TODO
+The source code contains SampleApplication as a sample application.
+The application creates its working dir on SDCard, populates it with 20 sample images and starts ImageBrowser for the images.
