@@ -1027,6 +1027,9 @@ public class IOUtils {
             // Logger.debug("resizeImage: byte[] data size = " + data.length +
             // ", going to read..");
             in.read(data);
+            
+            safelyCloseStream(in);
+            safelyCloseStream(fc);
 
             // Logger.debug("resizeImage: going to create EncodedImage..");
             EncodedImage eImage = EncodedImage.createEncodedImage(data, 0, data.length);
