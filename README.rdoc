@@ -2,7 +2,7 @@
 
 This is a custom ImageBrowser component for Java BlackBerry development.
 
-ImageBrowser[http://img219.imageshack.us/img219/3601/bbimagebrowserscreens.jpg]
+ImageBrowser[http://i.piccy.info/i5/20/49/1184920/bb_image_browser_screens.jpg]
 
 === Usage
 
