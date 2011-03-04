@@ -2,6 +2,8 @@
 
 This is a custom ImageBrowser component for Java BlackBerry development.
 
+ImageBrowser[http://img219.imageshack.us/img219/3601/bbimagebrowserscreens.jpg]
+
 === Usage
 
 ImageBrowser component has ImageBrowserScreen as an entrance point.
